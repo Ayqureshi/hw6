@@ -17,41 +17,65 @@ struct MyStringHash {
         }
     }
     // hash function entry point (i.e. this is h(k))
-    HASH_INDEX_T operator()(const std::string& k) const
-    {
-        // Add your code here
-				k = tolower(k);
-				unsigned long long antidisestablishmentarianism[5];
-				for(int i = 0; i< antidisestablishmentarianism.size();i++){
-					antidisestablishmentarianism[i] = 0;
-				}
-				
+     HASH_INDEX_T operator()(const std::string& k) const
+     {
 
+			unsigned long long antidisestablishment[5];
+			unsigned int index = 4;
+			unsigned int six_counter = 0;
+			unsigned long long curr = 0;
+			unsigned long long power = 1;
+			for(int i = 0; i < 5; i++) {
+				antidisestablishment[i] = 0;
+			}
+			for(int i = k.length() - 1; i >= 0; i--) {
+				six_counter++;
+				curr += power*letterDigitToNumber(k[i]);		
+				power = power *36;
+				if(six_counter == 6){
+					antidisestablishment[index] = curr;
+					power = 1;
+					curr = 0;
+					six_counter = 0;
+					index= index - 1;
+				}
+			}
+
+            
+			if (index >= 0 && six_counter < 6) {
+				antidisestablishment[index] = curr;
+			}
+		
+			HASH_INDEX_T val = 0;
+			for (int i = 0; i < 5; i++) {
+				val += (rValues[i] * antidisestablishment[i]);
+			}
+        
+		return val;
     }
 
     // A likely helper function is to convert a-z,0-9 to an integral value 0-35
     HASH_INDEX_T letterDigitToNumber(char letter) const
     {
         // Add code here or delete this helper function if you do not want it
-				if (letter >= 0 or letter <=9){
-					HASH_INDEX_T inde = 0;
-					for(char i = '0'; i <= '9'; i++){
-						inde++
-						if(i == letter){
-							return inde+25;
+				HASH_INDEX_T fred;
+				if (letter >= 97 and letter <=122){
+							fred = letter-97;
+							return fred;
 						}
-					}
+				if (letter >= 48 and letter <=57){
+					fred = letter-22;
+					return fred;
+				}
+				if(letter >=65 && letter <= 90){
+					fred = letter-65;
+					return fred;
 				}
 				else{
-					HASH_INDEX_T inde = 0;
-					for(char i = 'a'; i <= 'z';i++){
-						inde++;
-						if(i == letter){
-							return inde;
-						}
-					}
-				} 
-    }
+					fred = -1;
+					return fred;
+				}
+			}
 
     // Code to generate the random R values
     void generateRValues()
